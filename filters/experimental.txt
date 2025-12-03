@@ -34,15 +34,12 @@ www.youtube.com##+js(trusted-json-edit-xhr-response, '..playerConfig.granularVar
 ! www.youtube.com##+js(trusted-replace-fetch-response, "maximumPlaybackRate":100, "maximumPlaybackRate":200, /\/(player|get_watch)/)
 ! www.youtube.com##+js(trusted-json-edit-xhr-response, '..playerConfig.granularVariableSpeedConfig+={"minimumPlaybackRate":25,"maximumPlaybackRate":200}', propsToMatch, /\/(player|get_watch)/)
 
+! Twitch ad blocking – fixed version (only the stuff you had)
 !#if cap_html_filtering
-! www.twitch.tv/esl_dota2
-||ttvnw.net/v1/playlist$xhr,3p,replace=/#EXT-X-DATERANGE:ID="(stitched-ad|maf-ad|source|trigger)"\S+\n|#EXT-X-DATERANGE:ID=\S+?CLASS="twitch-(?:stream-source|trigger|maf-ad)"\S+\n|#EXT-X-DATERANGE:\S+?CLASS="twitch-ad-quartile".+?(?=(#EXT-X-DATERANGE|$))|(\n#EXT-X-DISCONTINUITY\s|#EXT-X-TWITCH-PREFETCH\S+)//gs
+||ttvnw.net/v1/playlist$m3u8,xhr,3p,replace=/#EXT-X-DATERANGE:ID="(stitched-ad|maf-ad|source|trigger)".*?\n|#EXT-X-DATERANGE:.*?CLASS="twitch-(?:stream-source|trigger|maf-ad)".*?\n|#EXT-X-DATERANGE:.*?CLASS="twitch-ad-quartile".*?(?=#EXT-X-DATERANGE|$)|\n?#EXT-X-DISCONTINUITY\s*\n?|\n?#EXT-X-TWITCH-PREFETCH.*?\n?//gs
+!#endif
+
 www.twitch.tv##[data-a-target="video-ad-label"]
 www.twitch.tv##[data-a-target="video-ad-countdown"]
 www.twitch.tv##button[aria-label="Leave feedback for this Ad"]
 www.twitch.tv##button[aria-label="Learn more about this ad"]
-www.twitch.tv##:matches-path(/^\/[0-9_a-z]+$/) .video-player__overlay > .follow-panel-overlay.tw-transition[aria-hidden="false"]
-www.twitch.tv##:matches-path(/^\/[0-9_a-z]+$/) .top-bar--pointer-enabled > div > .tw-media-card-stat
-www.twitch.tv##:matches-path(/^\/[0-9_a-z]+$/) [data-a-target="video-ref"]:has(.video-player__overlay > .follow-panel-overlay.tw-transition[aria-hidden="false"]) + div[class^="Layout-sc-"][hidden=""]:style(display:block !important;)
-www.twitch.tv##:matches-path(/^\/[0-9_a-z]+$/) div.video-player__overlay > div[class*="InjectLayout-sc-"] > div.player-overlay-background--darkness-3
-!#endif
